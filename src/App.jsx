@@ -3,27 +3,32 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 const ASCII_TITLE = `
-▓█▀▀▄ █  █ █   █▀▀█ █▀▀▄    █▀▀ █▀▀█ █▀▀█ █▀▀▄ █▀▀ 
-█  █  █  █ █   █▄▄█ █  █    █▀▀ █  █ █▄▄▀ █  █ █▀▀ 
-█▄▄▀ ▀▄▄▀ ▀▀▀ █  █ █▄▄▀    ▀   ▀▀▀▀ ▀ ▀▀ ▀▄▄▀ ▀▀▀
-=================================================
+   _____                              
+  |  __ \\                             
+  | |__) |___  ___ _   _ _ __ ___  ___ 
+  |  _  // _ \\/ __| | | | '_ \` _ \\/ _ \\
+  | | \\ \\  __/\\__ \\ |_| | | | | | |  __/
+  |_|  \\_\\___||___/\\__,_|_| |_| |_|\\___|
 `;
 
-const ASCII_PLAYER = `
-    ,_____,
-    |     |
-    |_____| 
-   ___|_|___
-  |         |
-  | RESUME  |
-  |_________|
-`;
+const fileSystem = {
+  '/': ['experience', 'education', 'skills', 'projects'],
+  '/experience': ['microsoft.txt', 'ucc.txt'],
+  '/education': ['msc.txt', 'bsc.txt'],
+  '/skills': ['technical.txt', 'soft.txt'],
+  '/projects': ['rl.txt', 'llm.txt']
+};
 
-const ASCII_DIVIDER = `
-+-----------------------------------+
-|      < SELECT YOUR PATH >         |
-+-----------------------------------+
-`;
+const fileContents = {
+  '/experience/microsoft.txt': '🏢 Microsoft Research (2024)\n- Software Engineering Intern\n- Development of state and API mocking solutions',
+  '/experience/ucc.txt': '🎓 UCC Lab Demonstrator\n- Teaching assistant for programming courses',
+  '/education/msc.txt': '🎓 MSc. AI for Medicine @ UCD (2024-2025)',
+  '/education/bsc.txt': '🎓 BSc. Data Science @ UCC (2020-2024)',
+  '/skills/technical.txt': '💻 Technical Skills:\n- Python, R, TypeScript, C#, Haskell, C++\n- CUDA, Git, React, .NET, Docker, Linux, MySQL',
+  '/skills/soft.txt': '🤝 Soft Skills:\n- Problem Solving\n- Team Collaboration\n- Technical Writing',
+  '/projects/rl.txt': '🤖 Deep RL Agents\n- Implemented reinforcement learning algorithms',
+  '/projects/llm.txt': '🧠 Basic LLM in C\n- Built a simple language model from scratch'
+};
 
 const sections = [
   {
@@ -62,17 +67,56 @@ export default function App() {
     setOutput(prev => [...prev, text]);
   };
 
+  const [currentPath, setCurrentPath] = useState('/');
+
   const handleCommand = (cmd) => {
-    const command = cmd.toLowerCase().trim();
-    if (command === 'next' && currentSection === 0) {
-      setCurrentSection(1);
-      addToOutput('Loading education section...');
-    } else if (sections[currentSection].choices.includes(command)) {
-      const newIndex = sections.findIndex(s => s.id === command);
-      setCurrentSection(newIndex);
-      addToOutput(`Loading ${command} section...`);
-    } else {
-      addToOutput('Invalid command. Try: ' + sections[currentSection].choices.join(', '));
+    const [command, ...args] = cmd.trim().split(' ');
+    
+    switch(command.toLowerCase()) {
+      case 'ls':
+        const contents = fileSystem[currentPath] || [];
+        addToOutput(contents.join('  '));
+        break;
+        
+      case 'cd':
+        const newPath = args[0];
+        if (!newPath || newPath === '/') {
+          setCurrentPath('/');
+          addToOutput('Changed to root directory');
+        } else if (fileSystem[`${currentPath}${newPath}`]) {
+          setCurrentPath(`${currentPath}${newPath}`);
+          addToOutput(`Changed to ${newPath}`);
+        } else if (fileSystem[newPath]) {
+          setCurrentPath(newPath);
+          addToOutput(`Changed to ${newPath}`);
+        } else {
+          addToOutput('Directory not found');
+        }
+        break;
+        
+      case 'pwd':
+        addToOutput(currentPath);
+        break;
+        
+      case 'cat':
+        const filePath = args[0].startsWith('/') ? args[0] : `${currentPath}${args[0]}`;
+        if (fileContents[filePath]) {
+          addToOutput(fileContents[filePath]);
+        } else {
+          addToOutput('File not found');
+        }
+        break;
+        
+      case 'help':
+        addToOutput('Available commands:\nls - list contents\ncd <dir> - change directory\npwd - print working directory\ncat <file> - view file contents\nclear - clear screen');
+        break;
+        
+      case 'clear':
+        setOutput([ASCII_TITLE]);
+        break;
+        
+      default:
+        addToOutput('Command not found. Type "help" for available commands');
     }
   };
 
