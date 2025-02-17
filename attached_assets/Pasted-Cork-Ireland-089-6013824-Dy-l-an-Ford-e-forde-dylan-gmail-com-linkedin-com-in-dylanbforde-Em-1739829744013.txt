@@ -1,0 +1,60 @@
+Cork, Ireland
+(089) 6013824 Dy l an Ford e
+forde.dylan@gmail.com
+linkedin.com/in/dylanbforde/
+Employment
+Software Engineering Intern Microsoft Research June 2024 – September 2024
+Dublin, Ireland
+• Develop and Implement state and API mocking solutions for production and testing environments,
+enhancing developer productivity and test coverages.
+Lab Demonstrator University College Cork September 2023 – May 2024
+Cork, Ireland
+• Facilitate class learning in Cloud Infrastructure & Services through tutorials and assignments.
+Software Engineering
+Placement
+Microsoft Research March 2023 – September
+2023
+Dublin, Ireland
+• Developed authentication mocking for token generation in production environments.
+• Created a builder pattern to simplify app configuration.
+• Initiative to critically assess Copilot’s outputs using NLP, semantic accuracy, and topic modelling.
+• Hackathon: Fine-tune LLM as an onboarding assistant for new hires.
+• Hackathon: Conceptual platform to address M365 educational suite problems.
+Data Science & Machine
+Learning Intern
+Agnicio June 2022 – September 2022
+Rotterdam, Netherlands
+• Transitioned forecasting models to SaaS approach.
+• Benchmarked proprietary models against top Kaggle models.
+• Developed new LightGBM/XGBoost/ARIMA models.
+• Created a Workshop Proposal for Dubai Transport Agency.
+Specialist Showroom Sales Dwyers Electrical November 2020 – May 2022
+Cork, Ireland
+• Self-directed team grossing €5M yearly, individually having overseen more than €350K in orders.
+• Maximized revenue by implementing a chatbot for online sales.
+• Cooperated regularly with suppliers to order and set prices for niche products.
+Papers
+• Intrinsic Quantification of Domain Shift Magnitude in Deep Reinforcement Learning Agents: Researching if Reactive Exploration has predictive capabilities in Domain Shift Environments. Available on Request.
+Education
+Dublin, Ireland University College Dublin Sep 2024 | Aug 2025
+• MSc. in Artificial Intelligence for Medicine & Medical Research.
+Cork, Ireland University College Cork Sep 2020 | Aug 2024
+• BSc. in Data Science & Analytics.
+Projects
+• Deep Reinforcement Learning Agents to Complete Popular Gym Environments Projects
+to complete most gym environments like Cartpole, Atari, etc. using Deep Reinforcement Learning.
+• Basic LLM in C (GPT-II and GPT-III Clone) Replicate Karpathy’s famous llm.c codebase
+• Particle Trajectory Simulation Simulate the trajectory of particles under different forces and
+environments, such as how sulfur would on different planets.
+• Orbital Mechanics Simulation Game to simulate the forces acting on objects like satellites in
+orbit, how movement controls trajectory.
+• Real Time Sign Language Recognizer Use Computer Vision and Deep Learning to predict what
+sign language symbols are being held up by a person.
+• Genetic Algorithms for Evolution Simulate the impacts of evolution on animals characteristics,
+like weight, based on natural selection.
+• Markov Chain Text Generation Generate a novel Haiku using Markov Chain Modelling, based
+on a dataset of completed Haikus.
+Languages, Technologies, and Additional Experience
+• Additional Experience: Amazon Mentoring Program 2022, Google Workshops 2022, Undergraduate Summer Internship at KPMG 2019, and Finance Internship Chanel 2017.
+• Languages: Python, R, Typescript, C#, Haskell, and C++.
+• Technologies: CUDA, Git, React, .NET, Docker, Linux, MySQL
