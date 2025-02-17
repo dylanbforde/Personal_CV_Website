@@ -1,2 +1,48 @@
-main {
+
+body {
+  margin: 0;
+  background: #000;
+  font-family: monospace;
+}
+
+.terminal {
+  padding: 20px;
+  min-height: 100vh;
+  background: #000;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.output {
+  margin-bottom: 20px;
+}
+
+.output pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+}
+
+.prompt {
+  color: #0f0;
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  outline: none;
 }
