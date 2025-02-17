@@ -129,9 +129,7 @@ export default function App() {
 
   useEffect(() => {
     addToOutput(ASCII_TITLE);
-    addToOutput(ASCII_PLAYER);
-    addToOutput(ASCII_DIVIDER);
-    addToOutput(sections[0].text);
+    addToOutput('\nWelcome! Type "help" to see available commands.\n');
   }, []);
 
   return (
