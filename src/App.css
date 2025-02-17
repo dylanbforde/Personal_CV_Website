@@ -1,18 +1,20 @@
 
 body {
   margin: 0;
-  background: #000;
-  font-family: monospace;
+  background: #1a1a1a;
+  font-family: 'Courier New', monospace;
+  color: #33ff33;
 }
 
 .terminal {
   padding: 20px;
   min-height: 100vh;
-  background: #000;
-  color: #0f0;
+  background: #1a1a1a;
+  color: #33ff33;
   font-family: 'Courier New', monospace;
   font-size: 16px;
   line-height: 1.4;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
 }
 
 .output {

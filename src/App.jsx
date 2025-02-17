@@ -2,72 +2,43 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-const ASCII_TITLE = `
-   _____                              
-  |  __ \\                             
-  | |__) |___  ___ _   _ _ __ ___  ___ 
-  |  _  // _ \\/ __| | | | '_ \` _ \\/ _ \\
-  | | \\ \\  __/\\__ \\ |_| | | | | | |  __/
-  |_|  \\_\\___||___/\\__,_|_| |_| |_|\\___|
-`;
-
 const fileSystem = {
-  '/': ['experience', 'education', 'skills', 'projects'],
-  '/experience': ['microsoft.txt', 'ucc.txt'],
-  '/education': ['msc.txt', 'bsc.txt'],
-  '/skills': ['technical.txt', 'soft.txt'],
-  '/projects': ['rl.txt', 'llm.txt']
+  '/': ['home', 'about'],
+  '/home': ['experience', 'education', 'skills', 'projects', 'contact'],
+  '/home/experience': ['microsoft.txt', 'ucc.txt'],
+  '/home/education': ['msc.txt', 'bsc.txt'],
+  '/home/skills': ['technical.txt', 'soft.txt'],
+  '/home/projects': ['rl.txt', 'llm.txt'],
+  '/home/contact': ['email.txt', 'social.txt'],
+  '/about': ['readme.txt']
 };
 
 const fileContents = {
-  '/experience/microsoft.txt': '🏢 Microsoft Research (2024)\n- Software Engineering Intern\n- Development of state and API mocking solutions',
-  '/experience/ucc.txt': '🎓 UCC Lab Demonstrator\n- Teaching assistant for programming courses',
-  '/education/msc.txt': '🎓 MSc. AI for Medicine @ UCD (2024-2025)',
-  '/education/bsc.txt': '🎓 BSc. Data Science @ UCC (2020-2024)',
-  '/skills/technical.txt': '💻 Technical Skills:\n- Python, R, TypeScript, C#, Haskell, C++\n- CUDA, Git, React, .NET, Docker, Linux, MySQL',
-  '/skills/soft.txt': '🤝 Soft Skills:\n- Problem Solving\n- Team Collaboration\n- Technical Writing',
-  '/projects/rl.txt': '🤖 Deep RL Agents\n- Implemented reinforcement learning algorithms',
-  '/projects/llm.txt': '🧠 Basic LLM in C\n- Built a simple language model from scratch'
+  '/about/readme.txt': '📝 Welcome to my interactive CV!\nNavigate through directories using cd and ls commands.\nType "help" for more information.',
+  '/home/experience/microsoft.txt': '🏢 Microsoft Research (2024)\n- Software Engineering Intern\n- Development of state and API mocking solutions',
+  '/home/experience/ucc.txt': '🎓 UCC Lab Demonstrator\n- Teaching assistant for programming courses',
+  '/home/education/msc.txt': '🎓 MSc. AI for Medicine @ UCD (2024-2025)',
+  '/home/education/bsc.txt': '🎓 BSc. Data Science @ UCC (2020-2024)',
+  '/home/skills/technical.txt': '💻 Technical Skills:\n- Python, R, TypeScript, C#, Haskell, C++\n- CUDA, Git, React, .NET, Docker, Linux, MySQL',
+  '/home/skills/soft.txt': '🤝 Soft Skills:\n- Problem Solving\n- Team Collaboration\n- Technical Writing',
+  '/home/projects/rl.txt': '🤖 Deep RL Agents\n- Implemented reinforcement learning algorithms',
+  '/home/projects/llm.txt': '🧠 Basic LLM in C\n- Built a simple language model from scratch',
+  '/home/contact/email.txt': '📧 Email: forde.dylan@gmail.com',
+  '/home/contact/social.txt': '🔗 LinkedIn: linkedin.com/in/dylanbforde/'
 };
 
-const sections = [
-  {
-    id: 'intro',
-    text: "Welcome to Dylan's Interactive CV! Use arrow keys or type 'next' to continue.",
-    choices: ['next']
-  },
-  {
-    id: 'education',
-    text: "🎓 Education:\n- MSc. AI for Medicine @ UCD (2024-2025)\n- BSc. Data Science @ UCC (2020-2024)",
-    choices: ['experience', 'projects', 'skills']
-  },
-  {
-    id: 'experience',
-    text: "💼 Experience:\n- Microsoft Research (2024)\n- UCC Lab Demonstrator\n- Agnicio Data Science Intern",
-    choices: ['education', 'projects', 'skills']
-  },
-  {
-    id: 'projects',
-    text: "🚀 Projects:\n- Deep RL Agents\n- Basic LLM in C\n- Sign Language Recognizer\n- Orbital Mechanics Simulation",
-    choices: ['education', 'experience', 'skills']
-  },
-  {
-    id: 'skills',
-    text: "🛠 Skills:\n- Python, R, TypeScript, C#, Haskell, C++\n- CUDA, Git, React, .NET, Docker, Linux, MySQL",
-    choices: ['education', 'experience', 'projects']
-  }
-];
-
 export default function App() {
-  const [currentSection, setCurrentSection] = useState(0);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
+  const [currentPath, setCurrentPath] = useState('/');
 
   const addToOutput = (text) => {
     setOutput(prev => [...prev, text]);
   };
 
-  const [currentPath, setCurrentPath] = useState('/');
+  const getPrompt = () => {
+    return `visitor@portfolio:${currentPath}$ `;
+  };
 
   const handleCommand = (cmd) => {
     const [command, ...args] = cmd.trim().split(' ');
@@ -75,31 +46,39 @@ export default function App() {
     switch(command.toLowerCase()) {
       case 'ls':
         const contents = fileSystem[currentPath] || [];
+        addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(contents.join('  '));
         break;
         
       case 'cd':
         const newPath = args[0];
+        addToOutput(`${getPrompt()}${cmd}`);
+        
         if (!newPath || newPath === '/') {
           setCurrentPath('/');
-          addToOutput('Changed to root directory');
-        } else if (fileSystem[`${currentPath}${newPath}`]) {
-          setCurrentPath(`${currentPath}${newPath}`);
-          addToOutput(`Changed to ${newPath}`);
-        } else if (fileSystem[newPath]) {
-          setCurrentPath(newPath);
-          addToOutput(`Changed to ${newPath}`);
+        } else if (newPath === '..') {
+          const parentPath = currentPath.split('/').slice(0, -1).join('/') || '/';
+          setCurrentPath(parentPath);
         } else {
-          addToOutput('Directory not found');
+          const targetPath = newPath.startsWith('/') ? newPath : 
+            `${currentPath === '/' ? '' : currentPath}/${newPath}`;
+          if (fileSystem[targetPath]) {
+            setCurrentPath(targetPath);
+          } else {
+            addToOutput('Directory not found');
+          }
         }
         break;
         
       case 'pwd':
+        addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(currentPath);
         break;
         
       case 'cat':
-        const filePath = args[0].startsWith('/') ? args[0] : `${currentPath}${args[0]}`;
+        addToOutput(`${getPrompt()}${cmd}`);
+        const filePath = args[0]?.startsWith('/') ? args[0] : 
+          `${currentPath === '/' ? '' : currentPath}/${args[0]}`;
         if (fileContents[filePath]) {
           addToOutput(fileContents[filePath]);
         } else {
@@ -107,29 +86,40 @@ export default function App() {
         }
         break;
         
-      case 'help':
-        addToOutput('Available commands:\nls - list contents\ncd <dir> - change directory\npwd - print working directory\ncat <file> - view file contents\nclear - clear screen');
+      case 'clear':
+        setOutput([]);
         break;
         
-      case 'clear':
-        setOutput([ASCII_TITLE]);
+      case 'help':
+        addToOutput(`${getPrompt()}${cmd}`);
+        addToOutput(
+          'Available commands:\n' +
+          'ls           - list directory contents\n' +
+          'cd <dir>    - change directory (use .. to go up)\n' +
+          'pwd         - print working directory\n' +
+          'cat <file>  - view file contents\n' +
+          'clear       - clear screen\n' +
+          'help        - show this help message'
+        );
         break;
         
       default:
+        addToOutput(`${getPrompt()}${cmd}`);
         addToOutput('Command not found. Type "help" for available commands');
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addToOutput(`> ${input}`);
-    handleCommand(input);
-    setInput('');
+    if (input.trim()) {
+      handleCommand(input);
+      setInput('');
+    }
   };
 
   useEffect(() => {
-    addToOutput(ASCII_TITLE);
-    addToOutput('\nWelcome! Type "help" to see available commands.\n');
+    addToOutput('Welcome to Dylan\'s Interactive CV Terminal\n');
+    addToOutput('Type "help" to see available commands\n');
   }, []);
 
   return (
@@ -140,7 +130,7 @@ export default function App() {
         ))}
       </div>
       <form onSubmit={handleSubmit}>
-        <span className="prompt">{'>'}</span>
+        <span className="prompt">{getPrompt()}</span>
         <input
           type="text"
           value={input}
