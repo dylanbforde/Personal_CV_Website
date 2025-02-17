@@ -13,18 +13,25 @@ const fileSystem = {
   '/about': ['readme.txt']
 };
 
-const fileContents = {
-  '/about/readme.txt': '📝 Welcome to my interactive CV!\nNavigate through directories using cd and ls commands.\nType "help" for more information.',
-  '/home/experience/microsoft.txt': '🏢 Microsoft Research (2024)\n- Software Engineering Intern\n- Development of state and API mocking solutions',
-  '/home/experience/ucc.txt': '🎓 UCC Lab Demonstrator\n- Teaching assistant for programming courses',
-  '/home/education/msc.txt': '🎓 MSc. AI for Medicine @ UCD (2024-2025)',
-  '/home/education/bsc.txt': '🎓 BSc. Data Science @ UCC (2020-2024)',
-  '/home/skills/technical.txt': '💻 Technical Skills:\n- Python, R, TypeScript, C#, Haskell, C++\n- CUDA, Git, React, .NET, Docker, Linux, MySQL',
-  '/home/skills/soft.txt': '🤝 Soft Skills:\n- Problem Solving\n- Team Collaboration\n- Technical Writing',
-  '/home/projects/rl.txt': '🤖 Deep RL Agents\n- Implemented reinforcement learning algorithms',
-  '/home/projects/llm.txt': '🧠 Basic LLM in C\n- Built a simple language model from scratch',
-  '/home/contact/email.txt': '📧 Email: forde.dylan@gmail.com',
-  '/home/contact/social.txt': '🔗 LinkedIn: linkedin.com/in/dylanbforde/'
+import { ReadmeFile } from './components/About';
+import { MicrosoftFile, UCCFile } from './components/Experience';
+import { MscFile, BscFile } from './components/Education';
+import { TechnicalFile, SoftFile } from './components/Skills';
+import { RLFile, LLMFile } from './components/Projects';
+import { EmailFile, SocialFile } from './components/Contact';
+
+const fileComponents = {
+  '/about/readme.txt': ReadmeFile,
+  '/home/experience/microsoft.txt': MicrosoftFile,
+  '/home/experience/ucc.txt': UCCFile,
+  '/home/education/msc.txt': MscFile,
+  '/home/education/bsc.txt': BscFile,
+  '/home/skills/technical.txt': TechnicalFile,
+  '/home/skills/soft.txt': SoftFile,
+  '/home/projects/rl.txt': RLFile,
+  '/home/projects/llm.txt': LLMFile,
+  '/home/contact/email.txt': EmailFile,
+  '/home/contact/social.txt': SocialFile
 };
 
 export default function App() {
@@ -79,8 +86,9 @@ export default function App() {
         addToOutput(`${getPrompt()}${cmd}`);
         const filePath = args[0]?.startsWith('/') ? args[0] : 
           `${currentPath === '/' ? '' : currentPath}/${args[0]}`;
-        if (fileContents[filePath]) {
-          addToOutput(fileContents[filePath]);
+        if (fileComponents[filePath]) {
+          const Component = fileComponents[filePath];
+          addToOutput(<Component />);
         } else {
           addToOutput('File not found');
         }
