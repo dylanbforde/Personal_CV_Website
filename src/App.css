@@ -1,20 +1,19 @@
-
 body {
   margin: 0;
-  background: #1a1a1a;
+  background: #001f3f; /* Dark blue background */
   font-family: 'Courier New', monospace;
-  color: #33ff33;
+  color: #f1f1f1; /* Light grey text */
 }
 
 .terminal {
   padding: 20px;
   min-height: 100vh;
-  background: #1a1a1a;
-  color: #33ff33;
+  background: #001f3f; /* Dark blue background */
+  color: #f1f1f1; /* Light grey text */
   font-family: 'Courier New', monospace;
   font-size: 16px;
   line-height: 1.4;
-  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .output {
@@ -32,14 +31,14 @@ form {
 }
 
 .prompt {
-  color: #0f0;
+  color: #00ff00; /* Bright green for the prompt */
 }
 
 input {
   flex: 1;
   background: transparent;
   border: none;
-  color: #0f0;
+  color: #f1f1f1; /* Light grey text for input */
   font-family: 'Courier New', monospace;
   font-size: 16px;
   outline: none;
