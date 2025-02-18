@@ -69,7 +69,38 @@ input:focus {
   margin: 5px 0;
 }
 
-.education-entry strong {
+.education-entry strong,
+.experience-entry strong,
+.skills-entry strong,
+.project-entry strong {
   color: #FF7A00; /* Orange for emphasis */
   margin-right: 8px;
+}
+
+.experience-entry,
+.skills-entry,
+.project-entry {
+  margin-bottom: 20px;
+}
+
+.experience-entry h3,
+.skills-entry h3,
+.project-entry h3 {
+  margin: 0 0 10px 0;
+  color: #875AFB; /* Purple for headers */
+}
+
+.experience-entry ul,
+.skills-entry ul,
+.project-entry ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 0;
+  color: #F1F1F1; /* White for text */
+}
+
+.experience-entry li,
+.skills-entry li,
+.project-entry li {
+  margin: 5px 0;
 }
