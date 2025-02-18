@@ -77,6 +77,54 @@ input:focus {
   margin-right: 8px;
 }
 
+.project-demo {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.demo-container {
+  height: 200px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  margin: 20px 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.agent {
+  font-size: 2em;
+  position: absolute;
+  left: 0;
+}
+
+.goal {
+  font-size: 2em;
+  position: absolute;
+  right: 20px;
+}
+
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #FFC200;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #FFC200 }
+}
+
 .experience-entry,
 .skills-entry,
 .project-entry {

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import './App.css';
 
@@ -49,18 +48,18 @@ export default function App() {
 
   const handleCommand = (cmd) => {
     const [command, ...args] = cmd.trim().split(' ');
-    
+
     switch(command.toLowerCase()) {
       case 'ls':
         const contents = fileSystem[currentPath] || [];
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(contents.join('  '));
         break;
-        
+
       case 'cd':
         const newPath = args[0];
         addToOutput(`${getPrompt()}${cmd}`);
-        
+
         if (!newPath || newPath === '/') {
           setCurrentPath('/');
         } else if (newPath === '..') {
@@ -76,12 +75,12 @@ export default function App() {
           }
         }
         break;
-        
+
       case 'pwd':
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(currentPath);
         break;
-        
+
       case 'cat':
         addToOutput(`${getPrompt()}${cmd}`);
         const filePath = args[0]?.startsWith('/') ? args[0] : 
@@ -93,11 +92,11 @@ export default function App() {
           addToOutput('File not found');
         }
         break;
-        
+
       case 'clear':
         setOutput([]);
         break;
-        
+
       case 'help':
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(
@@ -107,10 +106,11 @@ export default function App() {
           'pwd         - print working directory\n' +
           'cat <file>  - view file contents\n' +
           'clear       - clear screen\n' +
+          'run <demo>  - run interactive demos (try: run rl, run llm)\n' +
           'help        - show this help message'
         );
         break;
-        
+
       default:
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput('Command not found. Type "help" for available commands');
