@@ -1,15 +1,15 @@
 body {
   margin: 0;
-  background: #001f3f; /* Dark blue background */
+  background: #277DFF; /* Blue background */
   font-family: 'Courier New', monospace;
-  color: #00ff00; /* Light grey text */
+  color: #F1F1F1; /* White text */
 }
 
 .terminal {
   padding: 20px;
   min-height: 100vh;
-  background: #001f3f; /* Dark blue background */
-  color: #f1f1f1; /* Light grey text */
+  background: #277DFF; /* Blue background */
+  color: #F1F1F1; /* White text */
   font-family: 'Courier New', monospace;
   font-size: 16px;
   line-height: 1.4;
@@ -23,6 +23,7 @@ body {
 .output pre {
   margin: 0;
   white-space: pre-wrap;
+  color: #00AE6B; /* Green for code/pre blocks */
 }
 
 form {
@@ -31,14 +32,14 @@ form {
 }
 
 .prompt {
-  color: #00ff00; /* Bright green for the prompt */
+  color: #FFC200; /* Yellow for the prompt */
 }
 
 input {
   flex: 1;
   background: transparent;
   border: none;
-  color: #f1f1f1; /* Light grey text for input */
+  color: #F1F1F1; /* White text for input */
   font-family: 'Courier New', monospace;
   font-size: 16px;
   outline: none;
@@ -54,14 +55,14 @@ input:focus {
 
 .education-entry h3 {
   margin: 0 0 10px 0;
-  color: #f1f1f1;
+  color: #875AFB; /* Purple for headers */
 }
 
 .education-entry ul {
   list-style-type: none;
   padding-left: 20px;
   margin: 0;
-  color: #f1f1f1;
+  color: #F1F1F1; /* White for text */
 }
 
 .education-entry li {
@@ -69,6 +70,6 @@ input:focus {
 }
 
 .education-entry strong {
-  color: #;
+  color: #FF7A00; /* Orange for emphasis */
   margin-right: 8px;
 }
