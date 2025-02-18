@@ -13,6 +13,7 @@ const fileSystem = {
 };
 
 import { ReadmeFile } from './components/About';
+import { RunFile } from './components/RunFile';
 import { MicrosoftFile, UCCFile } from './components/Experience';
 import { MscFile, BscFile } from './components/Education';
 import { TechnicalFile, SoftFile } from './components/Skills';
@@ -109,6 +110,16 @@ export default function App() {
           'run <demo>  - run interactive demos (try: run rl, run llm)\n' +
           'help        - show this help message'
         );
+        break;
+
+      case 'run':
+        addToOutput(`${getPrompt()}${cmd}`);
+        if (args[0]) {
+          const Component = RunFile;
+          addToOutput(<Component fileName={args[0]} />);
+        } else {
+          addToOutput('Please specify what to run (e.g., run rl, run llm)');
+        }
         break;
 
       default:
