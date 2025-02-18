@@ -47,3 +47,27 @@ input {
 input:focus {
   outline: none;
 }
+
+.education-entry {
+  margin-bottom: 20px;
+}
+
+.education-entry h3 {
+  margin: 0 0 10px 0;
+  color: #00ff00;
+}
+
+.education-entry ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.education-entry li {
+  margin: 5px 0;
+}
+
+.education-entry strong {
+  color: #00ff00;
+  margin-right: 8px;
+}

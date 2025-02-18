@@ -1,20 +1,30 @@
+
 import React from "react";
 
 export const MscFile = () => {
   return (
-    <div>
-      🎓 MSc in Artificial Intelligence for Medicine and Medical Research -
-      University College Dublin (2024-2025) - Focus on Machine Learning and AI -
-      GPA 3.86/4.0
+    <div className="education-entry">
+      <h3>🎓 MSc in Artificial Intelligence for Medicine and Medical Research</h3>
+      <ul>
+        <li><strong>Institution:</strong> University College Dublin</li>
+        <li><strong>Duration:</strong> 2024-2025</li>
+        <li><strong>Focus:</strong> Machine Learning and AI</li>
+        <li><strong>GPA:</strong> 3.86/4.0</li>
+      </ul>
     </div>
   );
 };
 
 export const BscFile = () => {
   return (
-    <div>
-      🎓 BSc in Computer Science -University College Cork (2019-2023) - First
-      Class Honours - Final Year Project: Deep Reinforcement Learning
+    <div className="education-entry">
+      <h3>🎓 BSc in Computer Science</h3>
+      <ul>
+        <li><strong>Institution:</strong> University College Cork</li>
+        <li><strong>Duration:</strong> 2019-2023</li>
+        <li><strong>Achievement:</strong> First Class Honours</li>
+        <li><strong>Final Year Project:</strong> Deep Reinforcement Learning</li>
+      </ul>
     </div>
   );
 };
