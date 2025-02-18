@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: #277DFF; /* Blue background */
+  background: #09162a; /* Blue background */
   font-family: 'Courier New', monospace;
   color: #F1F1F1; /* White text */
 }
@@ -8,7 +8,7 @@ body {
 .terminal {
   padding: 20px;
   min-height: 100vh;
-  background: #277DFF; /* Blue background */
+  background: #09162a; /* Blue background */
   color: #F1F1F1; /* White text */
   font-family: 'Courier New', monospace;
   font-size: 16px;
