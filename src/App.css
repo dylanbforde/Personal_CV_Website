@@ -2,7 +2,7 @@ body {
   margin: 0;
   background: #001f3f; /* Dark blue background */
   font-family: 'Courier New', monospace;
-  color: #f1f1f1; /* Light grey text */
+  color: #00ff00; /* Light grey text */
 }
 
 .terminal {
@@ -54,13 +54,14 @@ input:focus {
 
 .education-entry h3 {
   margin: 0 0 10px 0;
-  color: #00ff00;
+  color: #f1f1f1;
 }
 
 .education-entry ul {
   list-style-type: none;
   padding-left: 20px;
   margin: 0;
+  color: #f1f1f1;
 }
 
 .education-entry li {
@@ -68,6 +69,6 @@ input:focus {
 }
 
 .education-entry strong {
-  color: #00ff00;
+  color: #;
   margin-right: 8px;
 }
