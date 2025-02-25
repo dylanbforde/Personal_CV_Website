@@ -165,6 +165,8 @@ export default function App() {
     return [...basicCommands, ...paths];
   };
 
+  const [lastPartial, setLastPartial] = useState("");
+  
   const handleTabComplete = (e) => {
     if (e.key === 'Tab') {
       e.preventDefault();
@@ -174,14 +176,21 @@ export default function App() {
       if (parts.length > 1) {
         // Handle command arguments
         const command = parts[0];
-        const partial = parts[parts.length - 1].toLowerCase().replace('.txt', '');
+        const currentArg = parts[parts.length - 1].toLowerCase().replace('.txt', '');
+        
+        // If this is a new tab sequence, store the partial
+        if (currentArg !== lastPartial) {
+          setLastPartial(currentArg);
+        }
+        
         const matches = commands.filter(cmd => 
-          cmd.toLowerCase().startsWith(partial) && !['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'].includes(cmd)
+          cmd.toLowerCase().startsWith(lastPartial) && !['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'].includes(cmd)
         );
         
         if (matches.length > 0) {
-          const currentMatch = parts[parts.length - 1].replace('.txt', '');
-          const currentIndex = matches.findIndex(match => match.toLowerCase() === currentMatch.toLowerCase());
+          const currentIndex = matches.findIndex(match => 
+            match.toLowerCase() === currentArg.toLowerCase()
+          );
           const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
           
           // For 'cat' command, append .txt
