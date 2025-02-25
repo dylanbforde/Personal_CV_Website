@@ -174,14 +174,15 @@ export default function App() {
       if (parts.length > 1) {
         // Handle command arguments
         const command = parts[0];
-        const partial = parts[parts.length - 1].toLowerCase();
-        const matches = commands.filter(cmd => cmd.startsWith(partial));
+        const partial = parts[parts.length - 1].toLowerCase().replace('.txt', '');
+        const matches = commands.filter(cmd => cmd.toLowerCase().startsWith(partial));
         
         if (matches.length > 0) {
-          // Find current match index and get next match
-          const currentMatch = parts[parts.length - 1];
-          const currentIndex = matches.indexOf(currentMatch);
-          const nextIndex = (currentIndex + 1) % matches.length;
+          const currentMatch = parts[parts.length - 1].replace('.txt', '');
+          let nextIndex = matches.indexOf(currentMatch) + 1;
+          if (nextIndex >= matches.length || nextIndex === 0) {
+            nextIndex = 0;
+          }
           
           // For 'cat' command, append .txt
           const nextMatch = command === 'cat' ? 
@@ -193,10 +194,12 @@ export default function App() {
         }
       } else {
         // Handle single command
-        const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
+        const matches = commands.filter(cmd => cmd.toLowerCase().startsWith(input.toLowerCase()));
         if (matches.length > 0) {
-          const currentIndex = matches.indexOf(input);
-          const nextIndex = (currentIndex + 1) % matches.length;
+          let nextIndex = matches.indexOf(input) + 1;
+          if (nextIndex >= matches.length || nextIndex === 0) {
+            nextIndex = 0;
+          }
           setInput(matches[nextIndex]);
         }
       }
