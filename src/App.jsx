@@ -148,10 +148,21 @@ export default function App() {
 
   const getAvailableCommands = () => {
     const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
-    const availablePaths = Object.keys(fileSystem).flatMap(path => 
-      path.split('/').filter(Boolean)
-    );
-    return [...new Set([...basicCommands, ...availablePaths])];
+    const paths = new Set();
+    
+    // Add directory names
+    Object.keys(fileSystem).forEach(path => {
+      path.split('/').filter(Boolean).forEach(part => paths.add(part));
+    });
+    
+    // Add file names
+    Object.values(fileSystem).forEach(items => {
+      items.forEach(item => {
+        paths.add(item.replace('.txt', ''));
+      });
+    });
+
+    return [...basicCommands, ...paths];
   };
 
   const handleTabComplete = (e) => {
