@@ -146,23 +146,25 @@ export default function App() {
     }
   };
 
-  const getAvailableCommands = () => {
+  const getAvailableCommands = (forCommand) => {
     const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
-    const paths = new Set();
     
-    // Add directory names
-    Object.keys(fileSystem).forEach(path => {
-      path.split('/').filter(Boolean).forEach(part => paths.add(part));
-    });
-    
-    // Add file names
-    Object.values(fileSystem).forEach(items => {
-      items.forEach(item => {
-        paths.add(item.replace('.txt', ''));
-      });
-    });
+    if (!forCommand) {
+      return basicCommands;
+    }
 
-    return [...basicCommands, ...paths];
+    // For 'cat' command, only return files in current directory
+    if (forCommand === 'cat') {
+      return fileSystem[currentPath] || [];
+    }
+
+    // For 'cd' command, only return directories
+    if (forCommand === 'cd') {
+      const currentDirs = fileSystem[currentPath] || [];
+      return currentDirs.filter(item => !item.endsWith('.txt'));
+    }
+
+    return [];
   };
 
   const [lastPartial, setLastPartial] = useState("");
@@ -176,15 +178,16 @@ export default function App() {
       if (parts.length > 1) {
         // Handle command arguments
         const command = parts[0];
-        const currentArg = parts[parts.length - 1].toLowerCase().replace('.txt', '');
+        const currentArg = parts[parts.length - 1].toLowerCase();
         
         // If this is a new tab sequence, store the partial
         if (currentArg !== lastPartial) {
           setLastPartial(currentArg);
         }
         
-        const matches = commands.filter(cmd => 
-          cmd.toLowerCase().startsWith(lastPartial) && !['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'].includes(cmd)
+        const availableOptions = getAvailableCommands(command);
+        const matches = availableOptions.filter(opt => 
+          opt.toLowerCase().startsWith(lastPartial)
         );
         
         if (matches.length > 0) {
