@@ -22,6 +22,7 @@ import { ReadmeFile } from "./components/About";
 import { RunFile } from "./components/RunFile";
 import {
   AgnicioFile,
+  DwyersFile,
   MicrosoftFile,
   MicrosoftPlacementFile,
   UCCFile,
