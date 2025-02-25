@@ -1,46 +1,60 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
 
 const fileSystem = {
-  '/': ['home', 'about'],
-  '/home': ['experience', 'education', 'skills', 'projects', 'contact'],
-  '/home/experience': ['microsoft.txt', 'ucc.txt'],
-  '/home/education': ['msc.txt', 'bsc.txt'],
-  '/home/skills': ['technical.txt', 'soft.txt'],
-  '/home/projects': ['rl.txt', 'llm.txt'],
-  '/home/contact': ['email.txt', 'social.txt'],
-  '/about': ['readme.txt']
+  "/": ["home", "about"],
+  "/home": ["experience", "education", "skills", "projects", "contact"],
+  "/home/experience": [
+    "microsoftInternship.txt",
+    "ucc.txt",
+    "microsoftPlacement.txt",
+    "agnicio.txt",
+    "dwyers.txt",
+  ],
+  "/home/education": ["msc.txt", "bsc.txt"],
+  "/home/skills": ["technical.txt", "soft.txt"],
+  "/home/projects": ["rl.txt", "llm.txt"],
+  "/home/contact": ["email.txt", "social.txt"],
+  "/about": ["readme.txt"],
 };
 
-import { ReadmeFile } from './components/About';
-import { RunFile } from './components/RunFile';
-import { MicrosoftFile, UCCFile } from './components/Experience';
-import { MscFile, BscFile } from './components/Education';
-import { TechnicalFile, SoftFile } from './components/Skills';
-import { RLFile, LLMFile } from './components/Projects';
-import { EmailFile, SocialFile } from './components/Contact';
+import { ReadmeFile } from "./components/About";
+import { RunFile } from "./components/RunFile";
+import {
+  AgnicioFile,
+  MicrosoftFile,
+  MicrosoftPlacementFile,
+  UCCFile,
+} from "./components/Experience";
+import { MscFile, BscFile } from "./components/Education";
+import { TechnicalFile, SoftFile } from "./components/Skills";
+import { RLFile, LLMFile } from "./components/Projects";
+import { EmailFile, SocialFile } from "./components/Contact";
 
 const fileComponents = {
-  '/about/readme.txt': ReadmeFile,
-  '/home/experience/microsoft.txt': MicrosoftFile,
-  '/home/experience/ucc.txt': UCCFile,
-  '/home/education/msc.txt': MscFile,
-  '/home/education/bsc.txt': BscFile,
-  '/home/skills/technical.txt': TechnicalFile,
-  '/home/skills/soft.txt': SoftFile,
-  '/home/projects/rl.txt': RLFile,
-  '/home/projects/llm.txt': LLMFile,
-  '/home/contact/email.txt': EmailFile,
-  '/home/contact/social.txt': SocialFile
+  "/about/readme.txt": ReadmeFile,
+  "/home/experience/microsoftInternship.txt": MicrosoftFile,
+  "/home/experience/ucc.txt": UCCFile,
+  "/home/experience/agnicio.txt": AgnicioFile,
+  "/home/experience/dwyers.txt": DwyersFile,
+  "home/experience/microsoftPlacement.txt": MicrosoftPlacementFile,
+  "/home/education/msc.txt": MscFile,
+  "/home/education/bsc.txt": BscFile,
+  "/home/skills/technical.txt": TechnicalFile,
+  "/home/skills/soft.txt": SoftFile,
+  "/home/projects/rl.txt": RLFile,
+  "/home/projects/llm.txt": LLMFile,
+  "/home/contact/email.txt": EmailFile,
+  "/home/contact/social.txt": SocialFile,
 };
 
 export default function App() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [output, setOutput] = useState([]);
-  const [currentPath, setCurrentPath] = useState('/');
+  const [currentPath, setCurrentPath] = useState("/");
 
   const addToOutput = (text) => {
-    setOutput(prev => [...prev, text]);
+    setOutput((prev) => [...prev, text]);
   };
 
   const getPrompt = () => {
@@ -48,77 +62,80 @@ export default function App() {
   };
 
   const handleCommand = (cmd) => {
-    const [command, ...args] = cmd.trim().split(' ');
+    const [command, ...args] = cmd.trim().split(" ");
 
-    switch(command.toLowerCase()) {
-      case 'ls':
+    switch (command.toLowerCase()) {
+      case "ls":
         const contents = fileSystem[currentPath] || [];
         addToOutput(`${getPrompt()}${cmd}`);
-        addToOutput(contents.join('  '));
+        addToOutput(contents.join("  "));
         break;
 
-      case 'cd':
+      case "cd":
         const newPath = args[0];
         addToOutput(`${getPrompt()}${cmd}`);
 
-        if (!newPath || newPath === '/') {
-          setCurrentPath('/');
-        } else if (newPath === '..') {
-          const parentPath = currentPath.split('/').slice(0, -1).join('/') || '/';
+        if (!newPath || newPath === "/") {
+          setCurrentPath("/");
+        } else if (newPath === "..") {
+          const parentPath =
+            currentPath.split("/").slice(0, -1).join("/") || "/";
           setCurrentPath(parentPath);
         } else {
-          const targetPath = newPath.startsWith('/') ? newPath : 
-            `${currentPath === '/' ? '' : currentPath}/${newPath}`;
+          const targetPath = newPath.startsWith("/")
+            ? newPath
+            : `${currentPath === "/" ? "" : currentPath}/${newPath}`;
           if (fileSystem[targetPath]) {
             setCurrentPath(targetPath);
           } else {
-            addToOutput('Directory not found');
+            addToOutput("Directory not found");
           }
         }
         break;
 
-      case 'pwd':
+      case "pwd":
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(currentPath);
         break;
 
-      case 'cat':
+      case "cat":
         addToOutput(`${getPrompt()}${cmd}`);
-        const filePath = args[0]?.startsWith('/') ? args[0] : 
-          `${currentPath === '/' ? '' : currentPath}/${args[0]}`;
+        const filePath = args[0]?.startsWith("/")
+          ? args[0]
+          : `${currentPath === "/" ? "" : currentPath}/${args[0]}`;
         if (fileComponents[filePath]) {
           const Component = fileComponents[filePath];
           addToOutput(<Component />);
         } else {
-          addToOutput('File not found');
+          addToOutput("File not found");
         }
         break;
 
-      case 'clear':
+      case "clear":
         setOutput([]);
         break;
 
-      case 'help':
+      case "help":
         addToOutput(`${getPrompt()}${cmd}`);
         addToOutput(
-          'Available commands:\n' +
-          'ls           - list directory contents\n' +
-          'cd <dir>    - change directory (use .. to go up)\n' +
-          'pwd         - print working directory\n' +
-          'cat <file>  - view file contents\n' +
-          'clear       - clear screen\n' +
-          'run <demo>  - run interactive demos (try: run rl, run llm)\n' +
-          'help        - show this help message'
+          "Available commands:\n" +
+            "ls           - list directory contents\n" +
+            "cd <dir>    - change directory (use .. to go up)\n" +
+            "pwd         - print working directory\n" +
+            "cat <file>  - view file contents\n" +
+            "clear       - clear screen\n" +
+            "run <demo>  - run interactive demos (try: run rl, run llm)\n" +
+            "help        - show this help message",
         );
         break;
 
-      case 'run':
+      case "run":
         addToOutput(`${getPrompt()}${cmd}`);
         if (args[0]) {
           const Component = RunFile;
           addToOutput(<Component fileName={args[0]} />);
         } else {
-          addToOutput('Please specify what to run (e.g., run rl, run llm)');
+          addToOutput("Please specify what to run (e.g., run rl, run llm)");
         }
         break;
 
@@ -132,12 +149,12 @@ export default function App() {
     e.preventDefault();
     if (input.trim()) {
       handleCommand(input);
-      setInput('');
+      setInput("");
     }
   };
 
   useEffect(() => {
-    addToOutput('Welcome to Dylan\'s Interactive CV Terminal\n');
+    addToOutput("Welcome to Dylan's Interactive CV Terminal\n");
     addToOutput('Type "help" to see available commands\n');
   }, []);
 
