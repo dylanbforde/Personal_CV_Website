@@ -155,7 +155,8 @@ export default function App() {
 
     // For 'cat' command, only return files in current directory
     if (forCommand === 'cat') {
-      return fileSystem[currentPath] || [];
+      const files = fileSystem[currentPath] || [];
+      return files.filter(file => file.endsWith('.txt'));
     }
 
     // For 'cd' command, only return directories
@@ -196,10 +197,7 @@ export default function App() {
           );
           const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
           
-          // For 'cat' command, append .txt
-          const nextMatch = command === 'cat' ? 
-            matches[nextIndex] + '.txt' : 
-            matches[nextIndex];
+          const nextMatch = matches[nextIndex];
             
           parts[parts.length - 1] = nextMatch;
           setInput(parts.join(' '));
