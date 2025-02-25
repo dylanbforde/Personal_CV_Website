@@ -13,6 +13,8 @@ export const SocialFile = () => {
   return (
     <div>
       LinkedIn: linkedin.com/in/dylanbforde/
+      <br />
+      GitHub: github.com/dylanbforde
     </div>
   );
 };
