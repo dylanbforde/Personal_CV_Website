@@ -146,6 +146,25 @@ export default function App() {
     }
   };
 
+  const getAvailableCommands = () => {
+    const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
+    const availablePaths = Object.keys(fileSystem).flatMap(path => 
+      path.split('/').filter(Boolean)
+    );
+    return [...new Set([...basicCommands, ...availablePaths])];
+  };
+
+  const handleTabComplete = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const commands = getAvailableCommands();
+      const match = commands.find(cmd => cmd.startsWith(input.toLowerCase()));
+      if (match) {
+        setInput(match);
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
@@ -172,6 +191,7 @@ export default function App() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleTabComplete}
           autoFocus
           spellCheck="false"
         />
