@@ -38,7 +38,7 @@ const fileComponents = {
   "/home/experience/ucc.txt": UCCFile,
   "/home/experience/agnicio.txt": AgnicioFile,
   "/home/experience/dwyers.txt": DwyersFile,
-  "home/experience/microsoftPlacement.txt": MicrosoftPlacementFile,
+  "/home/experience/microsoftPlacement.txt": MicrosoftPlacementFile,
   "/home/education/msc.txt": MscFile,
   "/home/education/bsc.txt": BscFile,
   "/home/skills/technical.txt": TechnicalFile,
