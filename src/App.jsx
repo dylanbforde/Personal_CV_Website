@@ -175,14 +175,14 @@ export default function App() {
         // Handle command arguments
         const command = parts[0];
         const partial = parts[parts.length - 1].toLowerCase().replace('.txt', '');
-        const matches = commands.filter(cmd => cmd.toLowerCase().startsWith(partial));
+        const matches = commands.filter(cmd => 
+          cmd.toLowerCase().startsWith(partial) && !['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'].includes(cmd)
+        );
         
         if (matches.length > 0) {
           const currentMatch = parts[parts.length - 1].replace('.txt', '');
-          let nextIndex = matches.indexOf(currentMatch) + 1;
-          if (nextIndex >= matches.length || nextIndex === 0) {
-            nextIndex = 0;
-          }
+          const currentIndex = matches.findIndex(match => match.toLowerCase() === currentMatch.toLowerCase());
+          const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
           
           // For 'cat' command, append .txt
           const nextMatch = command === 'cat' ? 
@@ -194,12 +194,11 @@ export default function App() {
         }
       } else {
         // Handle single command
-        const matches = commands.filter(cmd => cmd.toLowerCase().startsWith(input.toLowerCase()));
+        const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
+        const matches = basicCommands.filter(cmd => cmd.startsWith(input.toLowerCase()));
         if (matches.length > 0) {
-          let nextIndex = matches.indexOf(input) + 1;
-          if (nextIndex >= matches.length || nextIndex === 0) {
-            nextIndex = 0;
-          }
+          const currentIndex = matches.findIndex(match => match === input.toLowerCase());
+          const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
           setInput(matches[nextIndex]);
         }
       }
