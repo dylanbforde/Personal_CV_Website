@@ -174,17 +174,30 @@ export default function App() {
       if (parts.length > 1) {
         // Handle command arguments
         const command = parts[0];
-        const partial = parts[parts.length - 1];
-        const match = commands.find(cmd => cmd.startsWith(partial.toLowerCase()));
-        if (match) {
-          parts[parts.length - 1] = match;
+        const partial = parts[parts.length - 1].toLowerCase();
+        const matches = commands.filter(cmd => cmd.startsWith(partial));
+        
+        if (matches.length > 0) {
+          // Find current match index and get next match
+          const currentMatch = parts[parts.length - 1];
+          const currentIndex = matches.indexOf(currentMatch);
+          const nextIndex = (currentIndex + 1) % matches.length;
+          
+          // For 'cat' command, append .txt
+          const nextMatch = command === 'cat' ? 
+            matches[nextIndex] + '.txt' : 
+            matches[nextIndex];
+            
+          parts[parts.length - 1] = nextMatch;
           setInput(parts.join(' '));
         }
       } else {
         // Handle single command
-        const match = commands.find(cmd => cmd.startsWith(input.toLowerCase()));
-        if (match) {
-          setInput(match);
+        const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
+        if (matches.length > 0) {
+          const currentIndex = matches.indexOf(input);
+          const nextIndex = (currentIndex + 1) % matches.length;
+          setInput(matches[nextIndex]);
         }
       }
     }
