@@ -168,10 +168,24 @@ export default function App() {
   const handleTabComplete = (e) => {
     if (e.key === 'Tab') {
       e.preventDefault();
+      const parts = input.split(' ');
       const commands = getAvailableCommands();
-      const match = commands.find(cmd => cmd.startsWith(input.toLowerCase()));
-      if (match) {
-        setInput(match);
+      
+      if (parts.length > 1) {
+        // Handle command arguments
+        const command = parts[0];
+        const partial = parts[parts.length - 1];
+        const match = commands.find(cmd => cmd.startsWith(partial.toLowerCase()));
+        if (match) {
+          parts[parts.length - 1] = match;
+          setInput(parts.join(' '));
+        }
+      } else {
+        // Handle single command
+        const match = commands.find(cmd => cmd.startsWith(input.toLowerCase()));
+        if (match) {
+          setInput(match);
+        }
       }
     }
   };
