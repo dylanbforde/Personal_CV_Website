@@ -3,7 +3,8 @@ import "./App.css";
 
 const fileSystem = {
   "/": ["home", "about"],
-  "/home": ["experience", "education", "skills", "projects", "contact"],
+  "/home": ["experience", "education", "skills", "projects", "contact", "blog"],
+  "/home/blog": ["posts.txt", "react-terminal.txt", "reinforcement-learning.txt", "microsoft-internship.txt"],
   "/home/experience": [
     "microsoftInternship.txt",
     "ucc.txt",
@@ -31,8 +32,13 @@ import { MscFile, BscFile } from "./components/Education";
 import { TechnicalFile, SoftFile } from "./components/Skills";
 import { RLFile, LLMFile } from "./components/Projects";
 import { EmailFile, SocialFile } from "./components/Contact";
+import { BlogListFile, ReactTerminalPost, RLPost, MicrosoftPost } from "./components/Blog";
 
 const fileComponents = {
+  "/home/blog/posts.txt": BlogListFile,
+  "/home/blog/react-terminal.txt": ReactTerminalPost,
+  "/home/blog/reinforcement-learning.txt": RLPost,
+  "/home/blog/microsoft-internship.txt": MicrosoftPost,
   "/about/readme.txt": ReadmeFile,
   "/home/experience/microsoftInternship.txt": MicrosoftFile,
   "/home/experience/ucc.txt": UCCFile,
@@ -126,8 +132,21 @@ export default function App() {
             "cat <file>  - view file contents\n" +
             "clear       - clear screen\n" +
             "run <demo>  - run interactive demos (try: run rl, run llm)\n" +
+            "read <post> - read a blog post\n" +
             "help        - show this help message",
         );
+        break;
+
+      case "read":
+        addToOutput(`${getPrompt()}${cmd}`);
+        const postName = args[0];
+        const postPath = `/home/blog/${postName}.txt`;
+        if (fileComponents[postPath]) {
+          const Component = fileComponents[postPath];
+          addToOutput(<Component />);
+        } else {
+          addToOutput("Blog post not found. Use 'cat /home/blog/posts.txt' to see available posts.");
+        }
         break;
 
       case "run":
