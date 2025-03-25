@@ -4,7 +4,7 @@ import "./App.css";
 const fileSystem = {
   "/": ["home", "about"],
   "/home": ["experience", "education", "skills", "projects", "contact", "blog"],
-  "/home/blog": ["posts.txt", "react-terminal.txt", "reinforcement-learning.txt", "microsoft-internship.txt"],
+  "/home/blog": ["react-terminal.txt"],
   "/home/experience": [
     "microsoftInternship.txt",
     "ucc.txt",
@@ -32,7 +32,12 @@ import { MscFile, BscFile } from "./components/Education";
 import { TechnicalFile, SoftFile } from "./components/Skills";
 import { RLFile, LLMFile } from "./components/Projects";
 import { EmailFile, SocialFile } from "./components/Contact";
-import { BlogListFile, ReactTerminalPost, RLPost, MicrosoftPost } from "./components/Blog";
+import {
+  BlogListFile,
+  ReactTerminalPost,
+  RLPost,
+  MicrosoftPost,
+} from "./components/Blog";
 
 const fileComponents = {
   "/home/blog/posts.txt": BlogListFile,
@@ -145,7 +150,9 @@ export default function App() {
           const Component = fileComponents[postPath];
           addToOutput(<Component />);
         } else {
-          addToOutput("Blog post not found. Use 'cat /home/blog/posts.txt' to see available posts.");
+          addToOutput(
+            "Blog post not found. Use 'cat /home/blog/posts.txt' to see available posts.",
+          );
         }
         break;
 
@@ -166,68 +173,82 @@ export default function App() {
   };
 
   const getAvailableCommands = (forCommand) => {
-    const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
-    
+    const basicCommands = ["ls", "cd", "pwd", "cat", "clear", "help", "run"];
+
     if (!forCommand) {
       return basicCommands;
     }
 
     // For 'cat' command, only return files in current directory
-    if (forCommand === 'cat') {
+    if (forCommand === "cat") {
       const files = fileSystem[currentPath] || [];
-      return files.filter(file => file.endsWith('.txt'));
+      return files.filter((file) => file.endsWith(".txt"));
     }
 
     // For 'cd' command, only return directories
-    if (forCommand === 'cd') {
+    if (forCommand === "cd") {
       const currentDirs = fileSystem[currentPath] || [];
-      return currentDirs.filter(item => !item.endsWith('.txt'));
+      return currentDirs.filter((item) => !item.endsWith(".txt"));
     }
 
     return [];
   };
 
   const [lastPartial, setLastPartial] = useState("");
-  
+
   const handleTabComplete = (e) => {
-    if (e.key === 'Tab') {
+    if (e.key === "Tab") {
       e.preventDefault();
-      const parts = input.split(' ');
+      const parts = input.split(" ");
       const commands = getAvailableCommands();
-      
+
       if (parts.length > 1) {
         // Handle command arguments
         const command = parts[0];
         const currentArg = parts[parts.length - 1].toLowerCase();
-        
+
         // If this is a new tab sequence, store the partial
         if (currentArg !== lastPartial) {
           setLastPartial(currentArg);
         }
-        
+
         const availableOptions = getAvailableCommands(command);
-        const matches = availableOptions.filter(opt => 
-          opt.toLowerCase().startsWith(lastPartial)
+        const matches = availableOptions.filter((opt) =>
+          opt.toLowerCase().startsWith(lastPartial),
         );
-        
+
         if (matches.length > 0) {
-          const currentIndex = matches.findIndex(match => 
-            match.toLowerCase() === currentArg.toLowerCase()
+          const currentIndex = matches.findIndex(
+            (match) => match.toLowerCase() === currentArg.toLowerCase(),
           );
-          const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
-          
+          const nextIndex =
+            currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
+
           const nextMatch = matches[nextIndex];
-            
+
           parts[parts.length - 1] = nextMatch;
-          setInput(parts.join(' '));
+          setInput(parts.join(" "));
         }
       } else {
         // Handle single command
-        const basicCommands = ['ls', 'cd', 'pwd', 'cat', 'clear', 'help', 'run'];
-        const matches = basicCommands.filter(cmd => cmd.startsWith(input.toLowerCase()));
+        const basicCommands = [
+          "ls",
+          "cd",
+          "pwd",
+          "cat",
+          "clear",
+          "help",
+          "run",
+        ];
+        const matches = basicCommands.filter((cmd) =>
+          cmd.startsWith(input.toLowerCase()),
+        );
         if (matches.length > 0) {
-          const currentIndex = matches.findIndex(match => match === input.toLowerCase());
-          const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
+          const currentIndex = matches.findIndex(
+            (match) => match === input.toLowerCase(),
+          );
+          const nextIndex =
+            currentIndex === -1 ? 0 : (currentIndex + 1) % matches.length;
           setInput(matches[nextIndex]);
         }
       }
