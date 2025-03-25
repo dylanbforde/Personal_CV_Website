@@ -61,6 +61,7 @@ export default function App() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState([]);
   const [currentPath, setCurrentPath] = useState("/");
+  const isBlogSection = currentPath.includes('/blog');
 
   const addToOutput = (text) => {
     setOutput((prev) => [...prev, text]);
@@ -266,7 +267,7 @@ export default function App() {
   }, []);
 
   return (
-    <main className="terminal">
+    <main className={isBlogSection ? "blog-mode" : "terminal"}>
       <div className="output">
         {output.map((line, i) => (
           <pre key={i}>{line}</pre>

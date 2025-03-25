@@ -40,8 +40,10 @@ export const BlogPost = ({ postId }) => {
   if (!post) return <div>Post not found</div>;
 
   return (
-    <div className="blog-post" 
-         dangerouslySetInnerHTML={{ __html: post.content }}>
+    <div className="blog-post-container">
+      <div className="blog-post" 
+           dangerouslySetInnerHTML={{ __html: post.content }}>
+      </div>
     </div>
   );
 };
