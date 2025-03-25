@@ -6,3 +6,5 @@ An interactive terminal-style portfolio website built with React and Vite, featu
 - Blog section
 - Project showcase
 - Interactive demos
+
+Visit my portfolio to explore my work and experience through an interactive command-line interface.
