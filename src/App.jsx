@@ -63,6 +63,22 @@ export default function App() {
   const [currentPath, setCurrentPath] = useState("/");
   const isBlogSection = currentPath.includes('/blog');
 
+  useEffect(() => {
+    if (isBlogSection) {
+      setOutput([]);
+    }
+  }, [isBlogSection]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (isBlogSection) {
+        handleCommand(`read ${e.detail}`);
+      }
+    };
+    window.addEventListener('openBlogPost', handler);
+    return () => window.removeEventListener('openBlogPost', handler);
+  }, [isBlogSection]);
+
   const addToOutput = (text) => {
     setOutput((prev) => [...prev, text]);
   };

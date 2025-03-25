@@ -17,10 +17,16 @@ export const BlogListFile = () => {
       <h3>📝 Blog Posts</h3>
       <ul>
         {posts.map(post => (
-          <li key={post.id}>{post.id.replace(/_/g, ' ')}.txt</li>
+          <li key={post.id}>
+            <a href="#" onClick={(e) => {
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent('openBlogPost', { detail: post.id }));
+            }}>
+              {post.id.replace(/_/g, ' ')}
+            </a>
+          </li>
         ))}
       </ul>
-      <p>Use 'read post-name' to open a post</p>
     </div>
   );
 };
