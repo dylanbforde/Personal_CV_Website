@@ -13,11 +13,11 @@ export const BlogListFile = () => {
   }, []);
 
   return (
-    <div className="blog-entry">
+    <div className="blog-section">
       <h3>📝 Blog Posts</h3>
       <ul>
         {posts.map(post => (
-          <li key={post.id}>{post.id}.txt</li>
+          <li key={post.id}>{post.id.replace(/_/g, ' ')}.txt</li>
         ))}
       </ul>
       <p>Use 'read post-name' to open a post</p>

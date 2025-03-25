@@ -49,6 +49,37 @@ input:focus {
   outline: none;
 }
 
+.blog-section {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.blog-section h3 {
+  color: #09162a;
+}
+
+.blog-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.blog-section li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.blog-section a {
+  color: #875AFB;
+}
+
+.blog-post {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+}
+
 .education-entry {
   margin-bottom: 20px;
 }
