@@ -32,18 +32,11 @@ import { MscFile, BscFile } from "./components/Education";
 import { TechnicalFile, SoftFile } from "./components/Skills";
 import { RLFile, LLMFile } from "./components/Projects";
 import { EmailFile, SocialFile } from "./components/Contact";
-import {
-  BlogListFile,
-  ReactTerminalPost,
-  RLPost,
-  MicrosoftPost,
-} from "./components/Blog";
+import { BlogListFile, BlogPost } from "./components/Blog";
 
 const fileComponents = {
   "/home/blog/posts.txt": BlogListFile,
-  "/home/blog/react-terminal.txt": ReactTerminalPost,
-  "/home/blog/reinforcement-learning.txt": RLPost,
-  "/home/blog/microsoft-internship.txt": MicrosoftPost,
+  "/home/blog/react-terminal.txt": () => <BlogPost postId="react-terminal" />,
   "/about/readme.txt": ReadmeFile,
   "/home/experience/microsoftInternship.txt": MicrosoftFile,
   "/home/experience/ucc.txt": UCCFile,
