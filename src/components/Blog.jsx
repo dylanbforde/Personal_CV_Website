@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { getBlogPosts } from '../utils/blogUtils';
 
@@ -22,11 +23,12 @@ export const BlogListFile = () => {
               e.preventDefault();
               window.dispatchEvent(new CustomEvent('openBlogPost', { detail: post.id }));
             }}>
-              {post.id.replace(/_/g, ' ')}
+              {post.id.replace(/-/g, ' ')}
             </a>
           </li>
         ))}
       </ul>
+      <p>Click on a post title to read it</p>
     </div>
   );
 };
@@ -43,7 +45,7 @@ export const BlogPost = ({ postId }) => {
     loadPost();
   }, [postId]);
 
-  if (!post) return <div>Post not found</div>;
+  if (!post) return <div>Loading...</div>;
 
   return (
     <div className="blog-post-container">
