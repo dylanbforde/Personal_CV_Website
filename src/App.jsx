@@ -36,9 +36,11 @@ import { BlogListFile, BlogPost } from "./components/Blog";
 
 const fileComponents = {
   "/home/blog/posts.txt": BlogListFile,
-  "/home/blog/react-terminal.txt": () => <BlogPost postId="react-terminal" />,
-  "/home/blog/reinforcement-learning.txt": () => <BlogPost postId="reinforcement-learning" />,
-  "/home/blog/microsoft-internship.txt": () => <BlogPost postId="microsoft-internship" />,
+  ...Object.keys(import.meta.glob('./blog-posts/*.md', { as: 'raw', eager: true })).reduce((acc, path) => {
+    const fileName = path.split('/').pop().replace('.md', '');
+    acc[`/home/blog/${fileName}.txt`] = () => <BlogPost postId={fileName} />;
+    return acc;
+  }, {}),
   "/about/readme.txt": ReadmeFile,
   "/home/experience/microsoftInternship.txt": MicrosoftFile,
   "/home/experience/ucc.txt": UCCFile,
