@@ -65,18 +65,8 @@ export default function App() {
 
   useEffect(() => {
     if (isBlogSection) {
-      setOutput([]);
+      setOutput([<BlogPage key="blog-page" />]);
     }
-  }, [isBlogSection]);
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (isBlogSection) {
-        handleCommand(`read ${e.detail}`);
-      }
-    };
-    window.addEventListener('openBlogPost', handler);
-    return () => window.removeEventListener('openBlogPost', handler);
   }, [isBlogSection]);
 
   const addToOutput = (text) => {
