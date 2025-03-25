@@ -4,7 +4,7 @@ import "./App.css";
 const fileSystem = {
   "/": ["home", "about"],
   "/home": ["experience", "education", "skills", "projects", "contact", "blog"],
-  "/home/blog": ["posts.txt", "react-terminal.txt", "reinforcement-learning.txt", "microsoft-internship.txt"],
+  "/home/blog": ["posts.txt", ...Object.keys(import.meta.glob('./blog-posts/*.md', { as: 'raw', eager: true })).map(path => path.split('/').pop().replace('.md', '.txt'))],
   "/home/experience": [
     "microsoftInternship.txt",
     "ucc.txt",

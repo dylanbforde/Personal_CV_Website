@@ -17,7 +17,7 @@ export const BlogListFile = () => {
       <h3>📝 Blog Posts</h3>
       <ul>
         {posts.map(post => (
-          <li key={post.id}>{post.id}</li>
+          <li key={post.id}>{post.id}.txt</li>
         ))}
       </ul>
       <p>Use 'read post-name' to open a post</p>
