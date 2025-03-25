@@ -32,10 +32,10 @@ import { MscFile, BscFile } from "./components/Education";
 import { TechnicalFile, SoftFile } from "./components/Skills";
 import { RLFile, LLMFile } from "./components/Projects";
 import { EmailFile, SocialFile } from "./components/Contact";
-import { BlogListFile, BlogPost } from "./components/Blog";
+import { BlogPage } from "./components/Blog";
 
 const fileComponents = {
-  "/home/blog/posts.txt": BlogListFile,
+  "/home/blog/posts.txt": BlogPage,
   ...Object.keys(import.meta.glob('./blog-posts/*.md', { as: 'raw', eager: true })).reduce((acc, path) => {
     const fileName = path.split('/').pop().replace('.md', '');
     acc[`/home/blog/${fileName}.txt`] = () => <BlogPost postId={fileName} />;
